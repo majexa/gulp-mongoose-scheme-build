@@ -1,0 +1,23 @@
+{
+  "name": "gulp-mongoose-scheme-build",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/majexa/gulp-mongoose-scheme-build.git"
+  },
+  "author": "Andrey Yartsev",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/majexa/gulp-mongoose-scheme-build/issues"
+  },
+  "homepage": "https://github.com/majexa/gulp-mongoose-scheme-build#readme",
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "through2": "^2.0.3"
+  }
+}
