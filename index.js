@@ -5,6 +5,7 @@ var fs = require('fs');
 var typesMap = {
   "date": "Date",
   "text": "String",
+  "textarea": "String",
   "price": "Number",
   "select": "String"
 };
