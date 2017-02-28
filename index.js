@@ -7,7 +7,8 @@ var typesMap = {
   "text": "String",
   "textarea": "String",
   "price": "Number",
-  "select": "String"
+  "select": "String",
+  "file": "String"
 };
 
 module.exports = function (opt) {
@@ -34,7 +35,16 @@ module.exports = function (opt) {
     }
     scheme = "const mongoose = require('mongoose');\n\n" +
       "module.exports = mongoose.Schema({\n" + scheme + "});\n";
-    fs.writeFileSync(opt.schemasFolder + '/' + name + '.js', scheme);
-    console.log('Model "' + name + '" has stored to ' + opt.schemasFolder + '/' + name + '.js');
+
+    var mkdirp = require('mkdirp');
+    mkdirp(opt.schemasFolder, function (err) {
+      if (err) console.error(err)
+      else {
+        fs.writeFileSync(opt.schemasFolder + '/' + name + '.js', scheme);
+        console.log('Model "' + name + '" has stored to ' + opt.schemasFolder + '/' + name + '.js');
+      }
+      cb();
+    });
+
   });
 };
