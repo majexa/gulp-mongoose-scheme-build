@@ -8,7 +8,8 @@ var typesMap = {
   "textarea": "String",
   "price": "Number",
   "select": "String",
-  "file": "String"
+  "file": "String",
+  "hidden": "mongoose.Types.ObjectId"
 };
 
 module.exports = function (opt) {
@@ -19,8 +20,25 @@ module.exports = function (opt) {
     var field;
     for (var i = 0; i < fields.length; i++) {
       field = fields[i];
-      scheme += '  ' + field.name + ': {\n';
-      scheme += '    type: ' + (typesMap[field.type] || 'type map for "' + field.type + '" does not exists');
+      if (!field.name) {
+        throw new Error('field.name is required');
+      }
+      scheme += '  ' + field.name + ': ';
+      if (field._brackets) scheme += '[';
+      scheme += '{\n';
+      if (field._type) {
+        scheme += '    type: ' + field._type;
+        if (!field._ref) {
+          throw new Error('no ref');
+        }
+        scheme += ',\n';
+        scheme += "    ref: '" + field._ref + "'";
+      } else {
+        if (!typesMap[field.type]) {
+          throw new Error('type map for "' + field.type + '" does not exists');
+        }
+        scheme += '    type: ' + (typesMap[field.type]);
+      }
       if (field._default) {
         scheme += ',\n' + '    default: ' + field._default;
       }
@@ -28,6 +46,7 @@ module.exports = function (opt) {
         scheme += ',\n' + '    required: true';
       }
       scheme += '\n  }';
+      if (field._brackets) scheme += ']';
       if (i != fields.length - 1) {
         scheme += ',';
       }
@@ -45,6 +64,5 @@ module.exports = function (opt) {
       }
       cb();
     });
-
   });
 };
