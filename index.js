@@ -20,6 +20,9 @@ module.exports = function (opt) {
     var field;
     for (var i = 0; i < fields.length; i++) {
       field = fields[i];
+      if (field._virtual) {
+        continue;
+      }
       if (!field.name) {
         throw new Error('field.name is required');
       }
