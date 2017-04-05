@@ -38,12 +38,16 @@ module.exports = function (opt) {
         scheme += "    ref: '" + field._ref + "'";
       } else {
         if (!typesMap[field.type]) {
-          throw new Error('type map for "' + field.type + '" does not exists');
+          scheme += '    type: String';
+        } else {
+          scheme += '    type: ' + (typesMap[field.type]);
         }
-        scheme += '    type: ' + (typesMap[field.type]);
       }
       if (field._default) {
         scheme += ',\n' + '    default: ' + field._default;
+      }
+      if (field._unique) {
+        scheme += ',\n' + '    unique: ' + field._unique;
       }
       if (field.required) {
         scheme += ',\n' + '    required: true';
